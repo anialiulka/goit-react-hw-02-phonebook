@@ -1,9 +1,11 @@
 import { Component } from 'react';
 import css from './Input.module.css';
+import PropTypes from 'prop-types';
 
 export class Input extends Component {
   state = {
     name: '',
+    number: '',
   };
 
   handleChange = ({ target }) => {
@@ -14,7 +16,11 @@ export class Input extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.addContact({ name: this.state.name });
+    this.props.addContact({ name: this.state.name, number: this.state.number });
+    this.setState({
+      name: '',
+      number: '',
+    });
   };
 
   render() {
@@ -33,6 +39,19 @@ export class Input extends Component {
             value={this.state.name}
           />
         </label>
+        <label htmlFor="number" className={css.label}>
+          Number
+          <input
+            className={css.input}
+            type="tel"
+            name="number"
+            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            required
+            onChange={this.handleChange}
+            value={this.state.number}
+          />
+        </label>
         <button type="submit" className={css.button}>
           Add to contacts
         </button>
@@ -40,3 +59,7 @@ export class Input extends Component {
     );
   }
 }
+
+Input.propTypes = {
+  addContact: PropTypes.func.isRequired,
+};
