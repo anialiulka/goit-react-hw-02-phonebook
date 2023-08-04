@@ -4,6 +4,7 @@ import { Input } from './components/Input';
 import { Title } from './Title';
 import { Contacts } from './components/Contacts';
 import { Filter } from './components/FIlter';
+import { ContactElement } from 'components/ContactElement/ContactElement';
 
 import css from './App.module.css';
 
@@ -56,10 +57,12 @@ export class App extends Component {
         <Input addContact={this.addContact} />
         <Title>Contacts</Title>
         <Filter handleChange={this.handleChange} filter={this.state.filter} />
-        <Contacts
-          contacts={this.getFilteredContacts()}
-          deleteContact={this.deleteContact}
-        />
+        <Contacts>
+          <ContactElement
+            contacts={this.getFilteredContacts()}
+            deleteContact={this.deleteContact}
+          />
+        </Contacts>
       </div>
     );
   }
